@@ -24,7 +24,7 @@ a. Create a `Human` class with two properties:
 Then create an initializer for the class and create two `Human` instances.
 
 answer:
-```swift
+```swift 
 class Human {
     var name: String
     var age: Int
