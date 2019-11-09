@@ -23,14 +23,38 @@ a. Create a `Human` class with two properties:
 
 Then create an initializer for the class and create two `Human` instances.
 
-b. Make the `Human` class adopt the CustomStringConvertible protocol. Then print both of your previously initialized
-`Human` objects.
+answer:
+```swift
+protocol Human {
+    var name: String {get set}
+    var age: Int {get}
+}
+```
 
-c. Make the `Human` class adopt the Equatable protocol. Two instances of `Human` should be considered equal
-if their names and ages are identical to one another. Print the result of a boolean expression
+b. Make the `Human` class adopt the CustomStringConvertible protocol. Then print both of your previously initialized
+`Human` objects.  
+
+answer:    
+```swift
+protocol Human: CustomStringConvertible {
+    var name: String {get set}
+    var age: Int {get}
+}
+
+func printProperties(parameter: Human) {
+    print("The \(parameter.name) has \(parameter.age) years old.")
+}
+```
+
+c. Make the `Human` class adopt the Equatable protocol. Two instances of `Human` should be considered equal if their names and ages are identical to one another. Print the result of a boolean expression.   
 evaluating whether or not your two previously initialized `Human` objects are equal to eachother
 (using ==). Then print the result of a boolean expression evaluating whether or not your two
 previously initialized `Human` objects are not equal to eachother (using !=).
+
+answer: 
+```swift
+
+```
 
 d. Make the `Human` class adopt the `Comparable` protocol. One `Human` is greater than another `Human` if its age is bigger. Create another
 three instances of a `Human`, then create an array called people of type [`Human`] with all of the
@@ -40,6 +64,10 @@ Create a new array called sortedPeople of type [`Human`] that is the people arra
 
 </br> </br>
 
+answer:
+```swift
+
+```
 
 ## Question 2
 
@@ -47,15 +75,55 @@ a. Create a protocol called `Vehicle` with two requirements:
 - a nonsettable `numberOfWheels` property of type Int,
 - a function called drive().
 
+answer:
+```swift
+protocol Vehicle {
+    var numberOfWheels: Int {get}
+    
+    func drive() -> String
+}
+```
+
 b. Define a `Car` struct that implements the `Vehicle` protocol. `numberOfWheels` should return a value of 4,
 and drive() should print "Vroom, vroom!" Create an instance of `Car`, print its number of wheels,
 then call drive().
+
+answer:
+```swift
+struct Car: Vehicle {
+    var numberOfWheels: Int {
+        return 4
+    }
+    
+    func drive() -> String {
+        return "Vroom, vroom!"
+    }
+}
+var instance = Car()
+print(instance.numberOfWheels)
+print(instance.drive())
+```
+
 
 c. Define a Bike struct that implements the `Vehicle` protocol. `numberOfWheels` should return a value of 2,
 and drive() should print "Begin pedaling!". Create an instance of Bike, print its number of wheels,
 then call drive().
 
 </br> </br>
+
+answer:
+```swift
+struct Bike: Vehicle {
+    let numberOfWheels = 2
+    
+    func drive() -> String {
+        return "Begin pedaling!"
+    }
+}
+var instance2 = Bike()
+print(instance2.numberOfWheels)
+print(instance2.drive())
+```
 
 
 ## Question 3
@@ -72,6 +140,16 @@ protocol Bird {
 protocol Flyable {
  var airspeedVelocity: Double { get }
 }
+
+
+struct Penguin: Bird {
+    var name: String
+    var canFly: Bool
+}
+
+struct Eagle: Flyable {
+    var airspeedVelocity: Double
+}
 ```
 
 </br> </br>
@@ -80,21 +158,43 @@ protocol Flyable {
 
 a. Create a protocol called `Transformation`.  The protocol should specify a mutating method called transform
 
+answer:
+```swift
+protocol Transformation {
+     mutating func transfrom()
+}
+```
+
 b. Make an enum called `SuperHero` that conforms to `Transformation` with cases `notHulk` and `hulk`
 
+```swift
+enum SuperHero: Transformation {
+    case nothulk
+    case hulk
+    mutating func transfrom() {
+    }
+}
+```
 c. Create an instance of it named `bruceBanner`. Make it so that when the transform function is called that bruceBanner turns from
 `.notHulk` to `.hulk.``
 
 ```swift
 enum SuperHero: Transformation {
-    // write code here.
+   case nothulk
+    case hulk // the protocol has a function so it may not be confirming
+    // does not work with only caseiterable.
+    mutating func transfrom() {
+        switch self {
+        case .nothulk:
+            self = .hulk
+        case .hulk:
+            self = .nothulk
+        }
+    }
 }
-
 // Example Output:
 var bruceBanner = SuperHero.notHulk
-
-bruceBanner.transform() . // hulk
-
+bruceBanner.transform()   // hulk
 bruceBanner.transform()  // notHulk
 ```
 
@@ -105,18 +205,118 @@ bruceBanner.transform()  // notHulk
 
 a. Create a protocol called `Communication`
 
+answer:
+```swift
+protocol Communication {
+}
+```
+
 b. Give it a property called `message`, of type String, and assign it an explicit getter.
+
+answer:
+```swift
+protocol Communication {
+    var message: String {get}
+}
+```
 
 c. Create three Classes. `Cow`, `Dog`, `Cat`.
 
+answer:
+```swift
+class Cow {
+}
+class Dog {
+}
+class Cat {
+}
+```
+
 d. Have your three classes conform to `Communication`
 
-e. `message` should return a unique message for each animal when talk is called.
+answer:
+```swift
+class Cow: Communication {
+    var message: String = ""
+}
+class Dog: Communication {
+    var message: String = ""
+}
+class Cat: Communication {
+    var message: String = ""
+}
+```
+
+e. `message` should return a unique message for each animal when talk is called. 
+
+answer:
+```swift
+class Cow: Communication {
+    var message: String = ""
+    func talk() -> String {
+        message.append("moo moo")
+        return message
+    }
+}
+
+class Dog: Communication {
+    var message: String = ""
+    func talk() -> String {
+        message.append("woof, woof")
+        return message
+    }
+}
+
+class Cat: Communication {
+    var message: String = ""
+    func talk() -> String {
+        message.append("meow, meow")
+        return message
+    }
+}
+```
 
 f. Put an instance of each of your classes in an array.
 
+answer:
+```swift
+class Cow: Communication {
+    var message: String = ""
+    func talk() -> String {
+        message.append("moo moo")
+        return message
+    }
+}
+let instance3 = Cow()
+instance3.talk()
+
+class Dog: Communication {
+    var message: String = ""
+    func talk() -> String {
+        message.append("woof, woof")
+        return message
+    }
+}
+let instance4 = Dog()
+instance4.talk()
+
+class Cat: Communication {
+    var message: String = ""
+    func talk() -> String {
+        message.append("meow, meow")
+        return message
+    }
+}
+let instance5 = Cat()
+instance5.talk()
+```
+
 g. Iterate over the array and have them print their `message` property
 
+answer:
+```swift
+
+```
 
 ## Question 6
 
@@ -149,8 +349,7 @@ class HeartRateViewController: UIViewController {
     var heartRateLabel: UILabel = UILabel()
 }
 ```
-
-First, create an instance of HeartRateReceiver and call startHeartRateMonitoringExample. Notice that every two seconds currentHR get set and prints the new heart rate reading to the console.
+First, create an instance of HeartRateReceiver and call startHeartRateMonitoringExample. Notice that every two seconds currentHR get set and prints the new heart rate reading to the console. 
 
 In a real app, printing to the console does not show information to the user. You need a way of passing information from the HeartRateReceiver to the HeartRateViewController. To do this, create a protocol called HeartRateReceiverDelegate that requires a method heartRateUpdated(to bpm:) where bpm is of type Int and represents the new rate as beats per minute. Since playgrounds read from top to bottom and the two previously declared classes will need to use this protocol, you'll need to declare this protocol above the declaration of HeartRateReceiver.
 
