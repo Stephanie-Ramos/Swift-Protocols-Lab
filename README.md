@@ -25,10 +25,17 @@ Then create an initializer for the class and create two `Human` instances.
 
 answer:
 ```swift
-protocol Human {
-    var name: String {get set}
-    var age: Int {get}
+class Human {
+    var name: String
+    var age: Int
+    
+    init(name: String, age: Int){
+        self.name = name
+        self.age = age
+    }
 }
+let human1 = Human(name: "Rounded Circle", age: 10)
+let human2 = Human(name: "David", age: 60)
 ```
 
 b. Make the `Human` class adopt the CustomStringConvertible protocol. Then print both of your previously initialized
@@ -36,20 +43,28 @@ b. Make the `Human` class adopt the CustomStringConvertible protocol. Then print
 
 answer:    
 ```swift
-protocol Human: CustomStringConvertible {
-    var name: String {get set}
-    var age: Int {get}
+class Human { //
+    var name: String
+    var age: Int
+    
+    init(name: String, age: Int){
+        self.name = name
+        self.age = age
+    }
 }
+let human1 = Human(name: "Rounded Circle", age: 10)
+let human2 = Human(name: "David", age: 60)
 
-func printProperties(parameter: Human) {
-    print("The \(parameter.name) has \(parameter.age) years old.")
+extension Human: CustomStringConvertible {
+    var description: String {
+        return "\(name), \(age)"
+    }
 }
+print(human1)
+print(human2)
 ```
 
-c. Make the `Human` class adopt the Equatable protocol. Two instances of `Human` should be considered equal if their names and ages are identical to one another. Print the result of a boolean expression.   
-evaluating whether or not your two previously initialized `Human` objects are equal to eachother
-(using ==). Then print the result of a boolean expression evaluating whether or not your two
-previously initialized `Human` objects are not equal to eachother (using !=).
+c. Make the `Human` class adopt the Equatable protocol. Two instances of `Human` should be considered equal if their names and ages are identical to one another. Print the result of a boolean expression. evaluating whether or not your two previously initialized `Human` objects are equal to eachother (using ==). Then print the result of a boolean expression evaluating whether or not your two previously initialized `Human` objects are not equal to eachother (using !=). 
 
 answer: 
 ```swift
@@ -57,12 +72,9 @@ answer:
 ```
 
 d. Make the `Human` class adopt the `Comparable` protocol. One `Human` is greater than another `Human` if its age is bigger. Create another
-three instances of a `Human`, then create an array called people of type [`Human`] with all of the
-`Human` objects that you have initialized.
+three instances of a `Human`, then create an array called people of type [`Human`] with all of the `Human` objects that you have initialized.
 
 Create a new array called sortedPeople of type [`Human`] that is the people array sorted by age.
-
-</br> </br>
 
 answer:
 ```swift
@@ -104,12 +116,9 @@ print(instance.numberOfWheels)
 print(instance.drive())
 ```
 
-
 c. Define a Bike struct that implements the `Vehicle` protocol. `numberOfWheels` should return a value of 2,
 and drive() should print "Begin pedaling!". Create an instance of Bike, print its number of wheels,
 then call drive().
-
-</br> </br>
 
 answer:
 ```swift
@@ -127,7 +136,7 @@ print(instance2.drive())
 
 
 ## Question 3
-// Given the below two protocols, create a struct for penguin(a flightless bird) and an eagle.
+Given the below two protocols, create a struct for penguin(a flightless bird) and an eagle.
 
 Give your structs some properties and have them conform to the appropriate protocols.
 
@@ -151,8 +160,6 @@ struct Eagle: Flyable {
     var airspeedVelocity: Double
 }
 ```
-
-</br> </br>
 
 ## Question 4
 
@@ -197,9 +204,6 @@ var bruceBanner = SuperHero.notHulk
 bruceBanner.transform()   // hulk
 bruceBanner.transform()  // notHulk
 ```
-
-</br> </br>
-
 
 ## Question 5
 
