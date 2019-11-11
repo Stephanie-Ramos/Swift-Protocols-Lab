@@ -68,15 +68,29 @@ c. Make the `Human` class adopt the Equatable protocol. Two instances of `Human`
 
 answer: 
 ```swift
+extension Human: Equatable {
+   static func == (lhs: Human, rhs: Human) -> Bool {
+        return lhs.name == rhs.name &&
+            lhs.age == rhs.age
+    }
 
+   static func != (lhs: Human, rhs: Human) -> Bool {
+        return lhs.name != rhs.name &&
+            lhs.age != rhs.age
+            }
+}
+let human3 = Human(name: "Paul", age: 1)
+let human4 = Human(name: "Rob", age: 6)
+print(human3 == human4)
+print(human4 != human3)
 ```
 
 d. Make the `Human` class adopt the `Comparable` protocol. One `Human` is greater than another `Human` if its age is bigger. Create another
 three instances of a `Human`, then create an array called people of type [`Human`] with all of the `Human` objects that you have initialized.
 
-Create a new array called sortedPeople of type [`Human`] that is the people array sorted by age.
-
-answer:
+Create a new array called sortedPeople of type [`Human`] that is the people array sorted by age. 
+ 
+answer: 
 ```swift
 
 ```
