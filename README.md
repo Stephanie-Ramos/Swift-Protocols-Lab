@@ -92,7 +92,22 @@ Create a new array called sortedPeople of type [`Human`] that is the people arra
  
 answer: 
 ```swift
+// runtime error: does not sort age 
+extension Human: Comparable {
+static func == (lhs: Human, rhs: Human) -> Bool {
+       return lhs.age == rhs.age
+   }
+static func < (lhs: Human, rhs: Human) -> Bool {
+               return lhs.age < rhs.age
+           }
+   }
+let human5 = Human(name: "Robert", age: 29)
+let human6 = Human(name: "Hannah", age: 17)
+let human7 = Human(name: "Elizabeth", age: 5)
 
+var people: [Human] = [human5, human6, human7]
+var sortedPeople: [Human] = people.sorted() 
+print(sortedPeople)
 ```
 
 ## Question 2
@@ -333,7 +348,13 @@ g. Iterate over the array and have them print their `message` property
 
 answer:
 ```swift
-
+func printMessage(array: [Any]) {
+    for element in array {
+        print(element)
+    }
+}
+var array: [Any] = [instance3.message, instance4.message, instance5.message]
+printMessage(array: array)
 ```
 
 ## Question 6
@@ -376,3 +397,44 @@ Now make HeartRateViewController adopt the protocol you've just created. Inside 
 Now add a property called delegate to HeartRateReceiver that is of type HeartRateReceiverDelegate?. In the didSet of currentHR where currentHR is successfully unwrapped, call heartRateUpdated(to bpm:) on the delegate property.
 
 Finally, return to the line of code just after you initialized an instance of HeartRateReceiver. Initialize an instance of HeartRateViewController. Then, set the delegate property of your instance of HeartRateReceiver to be the instance of HeartRateViewController that you just created. Wait for your code to compile and observe what is printed to the console. Every time that currentHR gets set, you should see both a printout of the most recent heart rate, and the print statement stating that the heart rate was shown to the user.
+
+answer:
+```swift 
+// compiles an error on an instance below
+protocol HeartRateReceiverDelegate { 
+    func heartRateUpdated(to bpm:Int) 
+}
+
+class HeartRateReceiver {
+    var delegate: HeartRateReceiverDelegate?
+    var currentHR: Int? { 
+        didSet {
+            if let currentHR = currentHR {
+                print("The most recent heart rate reading is \(currentHR).")
+                delegate = (HeartRateReceiverDelegate.self as! HeartRateReceiverDelegate)
+            } else {
+                print("Looks like we can't pick up a heart rate.")
+            }
+        }
+    }
+    func startHeartRateMonitoringExample() {
+        for _ in 1...10 {
+            let randomHR = 60 + Int.random(in: 0...15)
+            currentHR = randomHR 
+            Thread.sleep(forTimeInterval: 2)
+        }
+    }
+}
+class HeartRateViewController: UIViewController, HeartRateReceiverDelegate {
+    func heartRateUpdated(to bpm: Int) {
+        if let word = heartRateLabel.text {
+            print("The user has been shown a heart rate of \(word)")
+        }
+    } 
+    var heartRateLabel: UILabel = UILabel() 
+}
+var course = HeartRateReceiver()
+course.startHeartRateMonitoringExample()
+var courset = HeartRateViewController()
+courset.heartRateUpdated(to: 6)
+```
